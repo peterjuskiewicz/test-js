@@ -13,12 +13,13 @@ const data = require("./data");
 
 // Your code
 
-const players = data.players();
+const players = data.getPlayers();
 
 const logPlayers = (players) => {
   players.forEach((player) => {
     console.log(
-      `PLAYER 1
+      `
+        PLAYER 1
         NAME: ${player.name}
         LASTNAME: ${player.lastname}
         POSITION: ${player.position}
@@ -76,11 +77,8 @@ calculateAverageGoals(players);
 // Your code
 
 const findPlayerByName = (players, playerName) => {
-  players.filter((player) => {
-    if (player.playerName === playerName) {
-      return player.position;
-    }
-  });
+  player = players.filter((player) => player.name === playerName);
+  console.log(player[0].position);
 };
 
-findPlayerByName(players, 'Tammy')
+findPlayerByName(players, 'Tammy');
