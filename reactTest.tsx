@@ -17,26 +17,46 @@
  * - The external data function can return undefined
  */
 
-import React from "react";
+import React, { useEffect } from "react";
 import ComponentA from 'components/ComponentA';
 import ComponentB from 'components/ComponentB';
+import useSelector from 'redux'
+
+interface IRootState {
+    MyReducer: any;
+}
 
 interface IInitialState {
     id: string;
+    
 }
-
-const getDataFromExternalSource = (id: string): IData | undefined => {
-    // This returns an IData object or undefined
-};
 
 interface IData {
     name: string;
     age: number;
 }
 
+const getDataFromExternalSource = (id: string): IData | undefined => {
+    // This returns an IData object or undefined
+};
+
+
 const TestComponent = () => {
     const myReducer: IInitialState = useSelector((state: IRootState) => state.MyReducer);
 
+    const [data, setData] = React.useState<IData>(getDataFromExternalSource(myReducer?.id))
+
+    useEffect(() => {
+        setData(getDataFromExternalSource(myReducer?.id))
+    }, [myReducer])
+
+    if(data?.age < 18) {
+        return (<ComponentA />)
+    } else if (data?.age >= 18) {
+        return (<ComponentB />)
+    } else {
+        return <div>There was an error</div>
+    }
     
 }
 
